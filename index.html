@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Batistas OÜ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:       #09090F;
+  --bg-card:  #0F1319;
+  --gold:     #B8975A;
+  --gold-dim: rgba(184,151,90,0.10);
+  --gold-br:  rgba(184,151,90,0.22);
+  --txt:      #DDD5C5;
+  --muted:    #617080;
+  --dim:      #3A4A58;
+  --border:   rgba(255,255,255,0.055);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',sans-serif;
+  background:var(--bg);
+  color:var(--txt);
+  font-size:15px;
+  line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+}
+.container{max-width:1100px;margin:0 auto;padding:0 2.5rem}
+.rule{height:1px;background:var(--gold-br)}
+.serif{font-family:'Cormorant Garamond',serif}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .65s ease,transform .65s ease}
+.reveal.visible{opacity:1;transform:none}
+.reveal-d1{transition-delay:.08s}
+.reveal-d2{transition-delay:.16s}
+.reveal-d3{transition-delay:.24s}
+
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(9,9,15,.88);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--border);
+}
+.nav-inner{
+  display:flex;align-items:center;justify-content:space-between;
+  height:62px;max-width:1100px;margin:0 auto;padding:0 2.5rem;
+}
+.nav-logo{
+  font-family:'Inter',sans-serif;
+  font-size:15px;font-weight:500;
+  letter-spacing:.28em;text-transform:uppercase;
+  color:var(--txt);text-decoration:none;
+}
+.nav-links{display:flex;align-items:center;gap:2rem;list-style:none}
+.nav-links a{
+  font-size:11px;font-weight:400;
+  letter-spacing:.12em;text-transform:uppercase;
+  color:var(--muted);text-decoration:none;
+  transition:color .2s;
+}
+.nav-links a:hover{color:var(--txt)}
+.lang-toggle{
+  display:flex;align-items:center;
+  background:var(--bg-card);
+  border:1px solid var(--gold-br);
+  border-radius:3px;overflow:hidden;
+}
+.lang-btn{
+  font-size:11px;font-weight:500;
+  letter-spacing:.08em;
+  padding:5px 11px;cursor:pointer;
+  color:var(--muted);background:none;border:none;
+  transition:all .2s;
+}
+.lang-btn.active{background:var(--gold);color:var(--bg);font-weight:500}
+.lang-sep{width:1px;height:18px;background:var(--gold-br)}
+
+/* HERO */
+.hero{
+  min-height:100vh;
+  display:flex;align-items:center;
+  position:relative;overflow:hidden;
+  padding:120px 0 80px;
+}
+.hero-bg-year{
+  position:absolute;right:3vw;top:50%;
+  transform:translateY(-50%);
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(100px,17vw,240px);
+  font-weight:300;font-style:italic;
+  color:rgba(184,151,90,0.035);
+  line-height:1;pointer-events:none;user-select:none;
+}
+.hero-bar{
+  position:absolute;left:2.5rem;top:120px;bottom:80px;
+  width:1px;background:var(--gold-br);
+}
+.hero-bar::after{
+  content:'EST. 2002';
+  position:absolute;top:50%;left:14px;
+  transform:translateY(-50%) rotate(90deg);
+  transform-origin:left center;
+  font-size:9px;letter-spacing:.25em;
+  color:var(--gold);font-weight:400;
+  white-space:nowrap;
+}
+.hero-content{
+  position:relative;
+  max-width:1100px;margin:0 auto;
+  padding:0 2.5rem 0 6rem;
+}
+.hero-eyebrow{
+  font-size:10px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--gold);
+  margin-bottom:1.5rem;
+}
+.hero-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(54px,9vw,118px);
+  font-weight:300;line-height:.92;
+  letter-spacing:-.01em;color:var(--txt);
+  margin-bottom:2rem;
+}
+.hero-title em{font-style:italic;color:var(--gold)}
+.hero-divider{width:44px;height:1px;background:var(--gold);margin-bottom:2rem}
+.hero-sub{
+  font-size:15px;font-weight:300;
+  color:var(--muted);max-width:400px;
+  line-height:1.85;margin-bottom:3rem;
+}
+.hero-stats{display:flex;gap:3rem}
+.stat-num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:38px;font-weight:400;color:var(--txt);line-height:1;
+}
+.stat-label{
+  font-size:10px;letter-spacing:.12em;
+  color:var(--muted);text-transform:uppercase;margin-top:5px;
+}
+.hero-scroll{
+  position:absolute;bottom:36px;left:50%;
+  transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  color:var(--dim);font-size:9px;letter-spacing:.18em;
+  text-transform:uppercase;
+  animation:pulse 2.4s infinite;
+}
+.hero-scroll::after{content:'';width:1px;height:32px;background:var(--gold-br)}
+@keyframes pulse{0%,100%{opacity:.5;transform:translateX(-50%) translateY(0)}50%{opacity:1;transform:translateX(-50%) translateY(5px)}}
+
+/* SECTIONS */
+section{padding:96px 0}
+.s-eye{
+  font-size:9px;letter-spacing:.28em;
+  text-transform:uppercase;color:var(--gold);
+  margin-bottom:.9rem;
+}
+.s-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(30px,4vw,50px);
+  font-weight:400;line-height:1.1;
+  margin-bottom:1.4rem;
+}
+.s-title em{font-style:italic;color:var(--gold)}
+.s-intro{font-size:15px;color:var(--muted);max-width:540px;line-height:1.85}
+
+/* ABOUT */
+.about-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:4rem;align-items:start;margin-top:3.5rem;
+}
+.about-text{font-size:15px;color:var(--muted);line-height:1.9}
+.about-text p+p{margin-top:1.2em}
+.about-stats{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:1.5px;background:var(--gold-br);
+  border:1px solid var(--gold-br);
+}
+.astat{background:var(--bg);padding:1.75rem 1.5rem}
+.astat-n{
+  font-family:'Cormorant Garamond',serif;
+  font-size:40px;font-weight:400;color:var(--txt);
+  line-height:1;margin-bottom:.4rem;
+}
+.astat-l{font-size:10px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
+
+/* PORTFOLIO */
+.port-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1px;background:var(--border);
+  margin-top:3rem;
+}
+.pcard{
+  background:var(--bg-card);
+  padding:2rem 1.75rem;
+  border-left:2px solid transparent;
+  transition:border-color .2s,background .2s;
+}
+.pcard:hover{border-left-color:var(--gold);background:#0e1320}
+.pstake{
+  font-family:'Cormorant Garamond',serif;
+  font-size:30px;font-weight:400;color:var(--gold);
+  line-height:1;margin-bottom:.7rem;
+}
+.pname{
+  font-size:13.5px;font-weight:500;
+  letter-spacing:.02em;color:var(--txt);
+  margin-bottom:.7rem;
+}
+.pdesc{font-size:12.5px;color:var(--muted);line-height:1.75;margin-bottom:1rem}
+.ptag{
+  display:inline-block;font-size:9px;
+  letter-spacing:.14em;text-transform:uppercase;
+  color:var(--gold);border:1px solid var(--gold-br);
+  padding:3px 8px;border-radius:2px;
+}
+
+/* SERVICES */
+.svc-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  border:1px solid var(--border);margin-top:3rem;
+}
+.svc{
+  padding:2.5rem 2rem;
+  border-right:1px solid var(--border);
+}
+.svc:last-child{border-right:none}
+.svc-n{
+  font-family:'Cormorant Garamond',serif;
+  font-size:52px;font-weight:300;
+  color:rgba(184,151,90,0.15);
+  line-height:1;margin-bottom:1.4rem;
+}
+.svc-t{
+  font-size:12px;font-weight:500;
+  letter-spacing:.1em;text-transform:uppercase;
+  color:var(--txt);margin-bottom:.9rem;
+}
+.svc-d{font-size:13px;color:var(--muted);line-height:1.8}
+
+/* REAL ESTATE */
+.re-list{margin-top:3rem;border-top:1px solid var(--border)}
+.prop{
+  display:grid;grid-template-columns:1fr auto auto;
+  align-items:center;gap:2rem;
+  padding:1.4rem 0;border-bottom:1px solid var(--border);
+  transition:padding .15s;cursor:default;
+}
+.prop:hover{padding-left:.75rem;padding-right:.75rem}
+.prop-name{font-size:13.5px;font-weight:400;color:var(--txt)}
+.prop-type{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:2px}
+.prop-loc{font-size:11px;color:var(--dim);text-align:right}
+.prop-area{
+  font-family:'Cormorant Garamond',serif;
+  font-size:20px;color:var(--gold);text-align:right;white-space:nowrap;
+}
+
+/* TRACK RECORD */
+.tl{position:relative;margin-top:3.5rem;padding-top:1.5rem}
+.tl::before{
+  content:'';position:absolute;left:0;right:0;top:1.5rem;
+  height:1px;background:var(--gold-br);
+}
+.tl-items{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:2rem;position:relative;
+}
+.tl-item::before{
+  content:'';position:absolute;
+  top:-1.75rem;left:0;
+  width:7px;height:7px;border-radius:50%;
+  border:1.5px solid var(--gold);background:var(--bg);
+  transform:translateY(50%);
+}
+.tl-item{position:relative}
+.tl-yr{
+  font-family:'Cormorant Garamond',serif;
+  font-size:22px;font-weight:400;color:var(--gold);
+  margin-top:1rem;margin-bottom:.4rem;
+}
+.tl-ev{font-size:13px;font-weight:500;color:var(--txt);margin-bottom:.35rem}
+.tl-det{font-size:12px;color:var(--muted);line-height:1.65}
+
+/* LEADERSHIP */
+.lcard{
+  margin-top:3rem;
+  display:grid;grid-template-columns:180px 1fr;
+  gap:3rem;align-items:center;
+  border:1px solid var(--border);padding:2.5rem;
+}
+.lavatar{
+  width:180px;height:180px;
+  background:var(--bg-card);
+  border:1px solid var(--gold-br);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Cormorant Garamond',serif;
+  font-size:52px;font-weight:300;color:var(--gold);
+  flex-shrink:0;
+}
+.lname{
+  font-family:'Cormorant Garamond',serif;
+  font-size:38px;font-weight:400;color:var(--txt);
+  margin-bottom:.2rem;
+}
+.lrole{
+  font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:1.4rem;
+}
+.lbio{font-size:14px;color:var(--muted);line-height:1.85;max-width:520px}
+
+/* CONTACT */
+.c-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:4rem;margin-top:3rem;
+}
+.c-label{
+  font-size:9.5px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--gold);margin-bottom:.4rem;
+}
+.c-val{font-size:14.5px;color:var(--txt);margin-bottom:1.75rem;line-height:1.7}
+.c-val a{
+  color:var(--txt);text-decoration:none;
+  border-bottom:1px solid var(--gold-br);
+  transition:border-color .2s;
+}
+.c-val a:hover{border-color:var(--gold)}
+.c-quote{
+  font-family:'Cormorant Garamond',serif;
+  font-size:26px;font-weight:300;font-style:italic;
+  color:var(--muted);line-height:1.55;
+  align-self:flex-end;
+}
+
+/* FOOTER */
+footer{padding:2.25rem 0;border-top:1px solid var(--border)}
+.foot{
+  display:flex;justify-content:space-between;align-items:flex-end;
+  max-width:1100px;margin:0 auto;padding:0 2.5rem;
+}
+.foot-logo{
+  font-family:'Cormorant Garamond',serif;
+  font-size:15px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);
+}
+.foot-meta{font-size:11px;color:var(--dim);margin-top:4px}
+.foot-copy{font-size:11px;color:var(--dim)}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .hero-bar{display:none}
+  .hero-content{padding:0 1.5rem}
+  .about-grid,.port-grid,.svc-grid,.c-grid{grid-template-columns:1fr}
+  .svc{border-right:none;border-bottom:1px solid var(--border)}
+  .svc:last-child{border-bottom:none}
+  .tl-items{grid-template-columns:1fr 1fr}
+  .lcard{grid-template-columns:1fr}
+  .lavatar{display:none}
+  .hero-stats{gap:1.75rem}
+  .nav-links{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ╔══════════════════════════════╗ -->
+<!-- ║            NAV              ║ -->
+<!-- ╚══════════════════════════════╝ -->
+<nav aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">Batistas OÜ</a>
+    <ul class="nav-links">
+      <li><a href="#portfell"><span class="et">Portfell</span><span class="en">Portfolio</span></a></li>
+      <li><a href="#teenused"><span class="et">Teenused</span><span class="en">Services</span></a></li>
+      <li><a href="#ajalugu"><span class="et">Ajalugu</span><span class="en">Track Record</span></a></li>
+      <li><a href="#kontakt"><span class="et">Kontakt</span><span class="en">Contact</span></a></li>
+    </ul>
+    <div class="lang-toggle" role="group" aria-label="Language">
+      <button class="lang-btn active" data-lang="et" aria-pressed="true">ET</button>
+      <div class="lang-sep" aria-hidden="true"></div>
+      <button class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ╔══════════════════════════════╗ -->
+<!-- ║            HERO             ║ -->
+<!-- ╚══════════════════════════════╝ -->
+<section class="hero" aria-label="Batistas OÜ">
+  <div class="hero-bar" aria-hidden="true"></div>
+  <div class="hero-bg-year" aria-hidden="true">2002</div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">
+      <span class="et">Erakapital · Ärinõustamine · Tallinn</span>
+      <span class="en">Private Capital · Business Advisory · Tallinn</span>
+    </p>
+    <h1 class="hero-title">
+      Batis<em>tas</em><br>OÜ
+    </h1>
+    <div class="hero-divider" aria-hidden="true"></div>
+    <p class="hero-sub">
+      <span class="et">Pikaajalise väärtuse loomine strateegiliste investeeringute, operatiivse kaasatuse ja tehingute vahendamise kaudu.</span>
+      <span class="en">Long-term value creation through strategic investments, operational involvement, and transaction intermediation.</span>
+    </p>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">22+</div>
+        <div class="stat-label"><span class="et">Aastat tegutsenud</span><span class="en">Years active</span></div>
+      </div>
+      <div>
+        <div class="stat-num">5+</div>
+        <div class="stat-label"><span class="et">Portfelliettevõtet</span><span class="en">Portfolio companies</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll" aria-hidden="true">
+    <span class="et">Edasi</span><span class="en">Scroll</span>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- ╔══════════════════════════════╗ -->
+<!-- ║            ABOUT            ║ -->
+<!-- ╚══════════════════════════════╝ -->
+<section id="meist">
+  <div class="container">
+    <p class="s-eye reveal"><span class="et">Meist</span><span class="en">About</span></p>
+    <h2 class="s-title reveal">
+      <span class="et">Eesti erakapital,<br><em>alates 2002</em></span>
+      <span class="en">Estonian private capital,<br><em>since 2002</em></span>
+    </h2>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p>
+          <span class="et">Batistas OÜ on Eesti erahoiuettevõte ja nõustamisettevõte, mis on tegutsenud alates 2002. aastast — investeerides, kasvatades ja müües osalusi valdkondades, kus nähakse pikaajalist potentsiaali.</span>
+          <span class="en">Batistas OÜ is an Estonian private holding and advisory company, active since 2002 — investing in, growing, and divesting stakes in sectors where long-term potential is identified.</span>
+        </p>
+        <p>
+          <span class="et">Meie fookus on tööstus, tootmine ja kinnisvara. Lisaks portfellihaldusele pakume ärinõustamist ning vahendame tehinguid — oleme partneriks nii omandamisel, müügil kui ka keerukate ärisituatsioonide lahendamisel.</span>
+          <span class="en">Our focus spans industry, manufacturing, and real estate. Beyond portfolio management, we provide business advisory services and act as deal intermediaries — a partner in acquisitions, divestitures, and complex business situations.</span>
+        </p>
+        <p>
+          <span class="et">Kõik investeeringud tehakse pikaajalise väärtuse loomise eesmärgil, säilitades operatiivse osaluse portfelliettevõtetes.</span>
+          <span class="en">All investments are made with long-term value creation in mind, maintaining operational involvement in portfolio companies.</span>
+        </p>
+      </div>
+      <div class="about-stats reveal reveal-d1">
+        <div class="astat">
+          <div class="astat-n">2002</div>
+          <div class="astat-l"><span class="et">Asutamisaasta</span><span class="en">Founded</span></div>
+        </div>
+        <div class="astat">
+          <div class="astat-n">5+</div>
+          <div class="astat-l"><span class="et">Aktiivsed investeeringud</span><span class="en">Active investments</span></div>
+        </div>
+        <div class="astat">
+          <div class="astat-n">3</div>
+          <div class="astat-l"><span class="et">Põhivaldkonda</span><span class="en">Core sectors</span></div>
+        </div>
+        <div class="astat">
+          <div class="astat-n">Tallinn</div>
+          <div class="astat-l">Eesti</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- ╔══════════════════════════════╗ -->
+<!-- ║          PORTFOLIO          ║ -->
+<!-- ╚══════════════════════════════╝ -->
+<section id="portfell">
+  <div class="container">
+    <p class="s-eye reveal"><span class="et">Portfell</span><span class="en">Portfolio</span></p>
+    <h2 class="s-title reveal">
+      <span class="et">Aktiivsed investeeringud</span>
+      <span class="en">Active investments</span>
+    </h2>
+    <p class="s-intro reveal">
+      <span class="et">Batistas OÜ portfell hõlmab osalusi Eesti tootmis-, tööstus- ja teenindussektori ettevõtetes.</span>
+      <span class="en">The Batistas OÜ portfolio includes stakes in Estonian manufacturing, industrial, and services sector companies.</span>
+    </p>
+    <div class="port-grid">
+
+      <article class="pcard reveal">
+        <div class="pstake">15%</div>
+        <div class="pname">Paragon Sleep AS</div>
+        <div class="pdesc">
+          <span class="et">Üks juhtivaid kodutekstiili tootjaid Eestis. Toodab tekke, padjaid, voodipesusid, madratsikatted ja madratseid. Tegutsenud ligi 30 aastat. Asukoht: Viljandi.</span>
+          <span class="en">One of Estonia's leading home textiles manufacturers. Products: duvets, pillows, bedding, mattress covers and mattresses. Active for nearly 30 years. Based in Viljandi.</span>
+        </div>
+        <span class="ptag"><span class="et">Tootmine · Tekstiil</span><span class="en">Manufacturing · Textiles</span></span>
+      </article>
+
+      <article class="pcard reveal reveal-d1">
+        <div class="pstake">~33%</div>
+        <div class="pname">Miterassa / S-Pro OÜ</div>
+        <div class="pdesc">
+          <span class="et">Tarbeelektroonika jaemüük ja hulgiturustus Eestis ja Soomes. Portfoolios kaubamärgid Sony, Bang &amp; Olufsen, Harman Kardon. Portfellis alates 1999.</span>
+          <span class="en">Consumer &amp; B2B electronics distribution in Estonia and Finland. Portfolio brands: Sony, Bang &amp; Olufsen, Harman Kardon. In portfolio since 1999.</span>
+        </div>
+        <span class="ptag"><span class="et">Kaubandus · Elektroonika</span><span class="en">Trade · Electronics</span></span>
+      </article>
+
+      <article class="pcard reveal reveal-d2">
+        <div class="pstake">50%</div>
+        <div class="pname">Idakillustik OÜ</div>
+        <div class="pdesc">
+          <span class="et">Killustiku ja kruusa tootmine ning müük. Tegutseb Sompa ja Kiviõli karjäärides Ida-Virumaal. Pakub ka purustamis- ja sõelumisteeenuseid ning masinarenti.</span>
+          <span class="en">Production and sale of crushed stone and gravel. Operates Sompa and Kiviõli quarries in Ida-Viru County. Also offers crushing, screening services and equipment rental.</span>
+        </div>
+        <span class="ptag"><span class="et">Kaevandamine</span><span class="en">Quarrying</span></span>
+      </article>
+
+      <article class="pcard reveal">
+        <div class="pstake">85%</div>
+        <div class="pname">Sompa Tööstuspark OÜ</div>
+        <div class="pdesc">
+          <span class="et">Tööstuspargi arendus ja haldus Kohtla-Järve Sompa linnaosas Ida-Virumaal. Kinnistumaht üle 250 000 m². Mitmeotstarbeline tootmisala.</span>
+          <span class="en">Industrial park development and management in the Sompa district of Kohtla-Järve, Ida-Viru County. Land holdings over 250,000 m². Multi-purpose production zone.</span>
+        </div>
+        <span class="ptag"><span class="et">Kinnisvara · Tööstus</span><span class="en">Real Estate · Industrial</span></span>
+      </article>
+
+      <article class="pcard reveal reveal-d1" style="grid-column: span 2;">
+        <div class="pstake" style="font-size:22px"><span class="et">Muud investeeringud</span><span class="en">Other investments</span></div>
+        <div class="pname" style="font-size:12.5px;color:var(--muted);font-weight:400">
+          <span class="et">Storyrent OÜ · Smart Production Management OÜ (19.8%) · Syndicate Number Two OÜ (4.1%) · Syndicate Number Three OÜ (0.5%)</span>
+          <span class="en">Storyrent OÜ · Smart Production Management OÜ (19.8%) · Syndicate Number Two OÜ (4.1%) · Syndicate Number Three OÜ (0.5%)</span>
+        </div>
+        <div class="pdesc">
+          <span class="et">Mitmeid väiksemaid vähemusosalusi investeerimis-, tootmis- ja teenindusvahendites.</span>
+          <span class="en">A number of smaller minority stakes across investment, production, and services vehicles.</span>
+        </div>
+        <span class="ptag"><span class="et">Mitmesugused</span><span class="en">Various</span></span>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- ╔══════════════════════════════╗ -->
+<!-- ║          SERVICES           ║ -->
+<!-- ╚══════════════════════════════╝ -->
+<section id="teenused">
+  <div class="container">
+    <p class="s-eye reveal"><span class="et">Teenused</span><span class="en">Services</span></p>
+    <h2 class="s-title reveal">
+      <span class="et">Mida me pakume</span>
+      <span class="en">What we offer</span>
+    </h2>
+    <div class="svc-grid reveal">
+      <div class="svc">
+        <div class="svc-n">I</div>
+        <div class="svc-t"><span class="et">Ärinõustamine</span><span class="en">Business Advisory</span></div>
+        <div class="svc-d">
+          <span class="et">Strateegiline nõustamine, turgude analüüs, äriplaanide hindamine ja restruktureerimise tugi. Üle 20 aasta kogemust Eesti ja Balti ärikeskkonnas tootmise, kaubanduse ja kinnisvara valdkonnas.</span>
+          <span class="en">Strategic consulting, market analysis, business plan evaluation, and restructuring support. Over 20 years of experience in the Estonian and Baltic business environment across manufacturing, trade, and real estate.</span>
+        </div>
+      </div>
+      <div class="svc">
+        <div class="svc-n">II</div>
+        <div class="svc-t"><span class="et">Tehingute vahendamine</span><span class="en">Deal Intermediation</span></div>
+        <div class="svc-d">
+          <span class="et">M&amp;A nõustamine, ostja ja müüja sobitamine, läbirääkimiste toetamine ning tehingute struktureerimine. Aktiivne isiklik võrgustik Eestis ja lähiregioonides. Diskreetsus garanteeritud.</span>
+          <span class="en">M&amp;A advisory, buyer-seller matching, negotiation support, and deal structuring. Active personal network across Estonia and the wider region. Discretion guaranteed.</span>
+        </div>
+      </div>
+      <div class="svc">
+        <div class="svc-n">III</div>
+        <div class="svc-t"><span class="et">Portfellihaldus &amp; kauplemine</span><span class="en">Portfolio &amp; Trading</span></div>
+        <div class="svc-d">
+          <span class="et">Investeeringute haldamine pikaajalise väärtuse loomise eesmärgil koos operatiivse kaasatusega. Lisaks sõidukite ja kaubanduskaupade vahendamisteenus.</span>
+          <span class="en">Investment management with a long-term value creation mandate and operational involvement. Additionally, intermediation services for motor vehicles and commercial goods.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- ╔══════════════════════════════╗ -->
+<!-- ║         TRACK RECORD        ║ -->
+<!-- ╚══════════════════════════════╝ -->
+<section id="ajalugu">
+  <div class="container">
+    <p class="s-eye reveal"><span class="et">Ajalugu</span><span class="en">Track Record</span></p>
+    <h2 class="s-title reveal">
+      <span class="et">Varasemad investeeringud</span>
+      <span class="en">Past investments</span>
+    </h2>
+    <p class="s-intro reveal">
+      <span class="et">Üle 25 aasta investeerimiskogemust erinevates sektorites.</span>
+      <span class="en">Over 25 years of investment experience across multiple sectors.</span>
+    </p>
+    <div class="tl reveal">
+      <div class="tl-items" style="grid-template-columns:repeat(2,1fr)">
+        <div class="tl-item">
+          <div class="tl-yr">2009</div>
+          <div class="tl-ev">Nordic Demolition Group OÜ</div>
+          <div class="tl-det">
+            <span class="et">Lammutus ja purustamine. Kasvas 2017. aastaks Eesti suurimaks lammutusettevõtteks, tegevus ka Lätis ja Soomes. 85% osalus. Väljutud 2017.</span>
+            <span class="en">Demolition and crushing. Grew to Estonia's largest demolition company by 2017, with operations in Latvia and Finland. 85% stake. Exited 2017.</span>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-yr">2002–</div>
+          <div class="tl-ev"><span class="et">Batistas OÜ tegutsemine</span><span class="en">Batistas OÜ in operation</span></div>
+          <div class="tl-det">
+            <span class="et">Portfell jätkuvalt kasvamas. Aktiivselt otsime uusi võimalusi tööstuse, tootmise ja kinnisvara valdkonnas.</span>
+            <span class="en">Portfolio continues to grow. Actively seeking new opportunities in industry, manufacturing, and real estate.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ╔══════════════════════════════╗ -->
+<!-- ║           CONTACT           ║ -->
+<!-- ╚══════════════════════════════╝ -->
+<section id="kontakt">
+  <div class="container">
+    <p class="s-eye reveal"><span class="et">Kontakt</span><span class="en">Contact</span></p>
+    <h2 class="s-title reveal">
+      <span class="et">Võtke ühendust</span>
+      <span class="en">Get in touch</span>
+    </h2>
+    <p class="s-intro reveal">
+      <span class="et">Huvitatud koostöövõimalustest, tehingutest või nõustamisest? Kirjutage meile.</span>
+      <span class="en">Interested in partnership opportunities, transactions, or advisory services? Write to us.</span>
+    </p>
+    <div class="c-grid reveal">
+      <div>
+        <div class="c-label"><span class="et">Aadress</span><span class="en">Address</span></div>
+        <div class="c-val">Tallinn, Eesti / Estonia</div>
+        <div class="c-label">E-post</div>
+        <div class="c-val"><a href="mailto:invoices@batistas.ee">invoices@batistas.ee</a></div>
+        <div class="c-label"><span class="et">Telefon</span><span class="en">Phone</span></div>
+        <div class="c-val"><a href="tel:+3725040367">+372 5040367</a></div>
+        <div class="c-label"><span class="et">Registrikood</span><span class="en">Registry code</span></div>
+        <div class="c-val" style="margin-bottom:.8rem">10863506</div>
+        <div class="c-label">KMKR / VAT</div>
+        <div class="c-val">EE100763632</div>
+      </div>
+      <div class="c-quote">
+        <span class="et">"Pikaajaline partner,<br>kes tunneb Eesti äri<br>seestpoolt."</span>
+        <span class="en">"A long-term partner<br>who knows Estonian<br>business from the inside."</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ╔══════════════════════════════╗ -->
+<!-- ║           FOOTER            ║ -->
+<!-- ╚══════════════════════════════╝ -->
+<footer>
+  <div class="foot">
+    <div>
+      <div class="foot-logo">Batistas OÜ</div>
+      <div class="foot-meta">Reg. 10863506 · VAT EE100763632 · Tallinn, Eesti</div>
+    </div>
+    <div class="foot-copy">© 2025 Batistas OÜ</div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var currentLang = 'et';
+
+  function applyLang(lang) {
+    currentLang = lang;
+    var etEls = document.querySelectorAll('.et');
+    var enEls = document.querySelectorAll('.en');
+    etEls.forEach(function(el){ el.style.display = lang === 'et' ? '' : 'none'; });
+    enEls.forEach(function(el){ el.style.display = lang === 'en' ? '' : 'none'; });
+    document.documentElement.lang = lang;
+    document.querySelectorAll('.lang-btn').forEach(function(b){
+      var active = b.dataset.lang === lang;
+      b.classList.toggle('active', active);
+      b.setAttribute('aria-pressed', active ? 'true' : 'false');
+    });
+  }
+
+  document.querySelectorAll('.lang-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){ applyLang(btn.dataset.lang); });
+  });
+
+  // Apply default
+  applyLang('et');
+
+  // Scroll reveal
+  var observer = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -48px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(function(el){ observer.observe(el); });
+
+  // Smooth active nav link highlight
+  var sections = document.querySelectorAll('section[id]');
+  var navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', function(){
+    var scrollY = window.scrollY;
+    var active = null;
+    sections.forEach(function(s){
+      if(scrollY >= s.offsetTop - 100) active = s.id;
+    });
+    navLinks.forEach(function(a){
+      var href = a.getAttribute('href').replace('#','');
+      a.style.color = href === active ? 'var(--txt)' : '';
+    });
+  }, { passive: true });
+})();
+</script>
+</body>
+</html>
